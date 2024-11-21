@@ -1,0 +1,20 @@
+def process_list(test_case):
+    # Check if the list is empty
+    if not test_case:
+        return test_case
+    
+    # Sort the list in ascending order
+    return sorted(test_case)
+
+# Test cases
+test_cases = [
+    [],                   # Empty list
+    [1],                  # List with one element
+    [7, 7, 7, 7],         # List with identical elements
+    [-5, -1, -3, -2, -4]  # List with negative numbers
+]
+
+# Run and print the results
+for case in test_cases:
+    result = process_list(case)
+    print(f"Input: {case} -> Expected Output: {result}")

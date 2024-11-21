@@ -1,0 +1,66 @@
+def is_valid(board, row, col, num):
+    """Check if it's valid to place num at board[row][col]."""
+    # Check row
+    for i in range(9):
+        if board[row][i] == num:
+            return False
+    
+    # Check column
+    for i in range(9):
+        if board[i][col] == num:
+            return False
+    
+    # Check 3x3 subgrid
+    start_row = (row // 3) * 3
+    start_col = (col // 3) * 3
+    for i in range(3):
+        for j in range(3):
+            if board[start_row + i][start_col + j] == num:
+                return False
+
+    return True
+
+def solve_sudoku(board):
+    """Solve the Sudoku puzzle using backtracking."""
+    for row in range(9):
+        for col in range(9):
+            # Find an empty cell (represented by '.')
+            if board[row][col] == '.':
+                # Try digits from '1' to '9'
+                for num in '123456789':
+                    if is_valid(board, row, col, num):
+                        board[row][col] = num
+                        # Recursively try to solve the next cell
+                        if solve_sudoku(board):
+                            return True
+                        # Backtrack if placing num didn't lead to a solution
+                        board[row][col] = '.'
+                return False  # No valid number could be placed, backtrack
+    return True  # All cells are filled, puzzle solved
+
+def print_board(board):
+    """Print the Sudoku board."""
+    for row in board:
+        print(" ".join(row))
+
+# Example Sudoku puzzle (0-based index)
+sudoku_board = [
+    ["5", "3", ".", ".", "7", ".", ".", ".", "."],
+    ["6", ".", ".", "1", "9", "5", ".", ".", "."],
+    [".", "9", "8", ".", ".", ".", ".", "6", "."],
+    ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
+    ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
+    ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
+    [".", "6", ".", ".", ".", ".", "2", "8", "."],
+    [".", ".", ".", "4", "1", "9", ".", ".", "5"],
+    [".", ".", ".", ".", "8", ".", ".", "7", "9"]
+]
+
+print("Original Sudoku Puzzle:")
+print_board(sudoku_board)
+
+# Solve the Sudoku
+solve_sudoku(sudoku_board)
+
+print("\nSolved Sudoku Puzzle:")
+print_board(sudoku_board)

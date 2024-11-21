@@ -1,0 +1,19 @@
+def uniquePaths(m, n):
+    # We need to calculate C(m+n-2, m-1) or C(m+n-2, n-1)
+    
+    # The number of paths is the combination of (m+n-2) choose (m-1) or (n-1)
+    # We will use a more efficient method to compute the combination
+    
+    # We use the smaller of (m-1) or (n-1) for efficiency
+    k = min(m - 1, n - 1)
+    
+    result = 1
+    for i in range(k):
+        result *= (m + n - 2 - i)  # Multiply by the top of the fraction
+        result //= (i + 1)         # Divide by the bottom of the fraction
+    
+    return result
+
+# Test cases
+print(uniquePaths(3, 7))  # Output: 28
+print(uniquePaths(3, 2))  # Output: 3

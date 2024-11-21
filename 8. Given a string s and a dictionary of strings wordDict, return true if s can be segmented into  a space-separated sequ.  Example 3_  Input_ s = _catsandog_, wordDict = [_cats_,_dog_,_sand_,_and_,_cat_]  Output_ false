@@ -1,0 +1,17 @@
+def word_break(s: str, wordDict: list[str]) -> bool:
+    word_set = set(wordDict)  # Convert list to set for faster lookup
+    dp = [False] * (len(s) + 1)
+    dp[0] = True  # Base case: empty string can be segmented
+
+    for i in range(1, len(s) + 1):
+        for j in range(i):
+            if dp[j] and s[j:i] in word_set:
+                dp[i] = True
+                break  # No need to check further once dp[i] is True
+
+    return dp[len(s)]
+
+# Example usage
+print(word_break("leetcode", ["leet", "code"]))  # Output: True
+print(word_break("applepenapple", ["apple", "pen"]))  # Output: True
+print(word_break("catsandog", ["cats", "dog", "sand", "and", "cat"]))  # Output: False
